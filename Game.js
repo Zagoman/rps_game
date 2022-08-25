@@ -1,22 +1,23 @@
 class Game {
-  constructor() {
+  constructor(options) {
     this._player1 = null;
     this._player2 = null;
+    this._options = options;
   }
 
   _Init(player1, player2) {
-    console.log("_Init Game");
+    // console.log("_Init Game");
     this._player1 = player1;
     this._player2 = player2;
   }
 
   _CheckResults() {
-    console.log("Check Results");
+    // console.log("Check Results");
     this._player2._RandomizeSign();
     if (this._player1._sign === "rock") {
       switch (this._player2._sign) {
         case "rock":
-          this._ShowResult("tie");
+          this._ShowResult("draw");
           break;
         case "paper":
           this._ShowResult("lose");
@@ -34,7 +35,7 @@ class Game {
           this._player1._PointIncrease();
           break;
         case "paper":
-          this._ShowResult("tie");
+          this._ShowResult("draw");
           break;
         case "scissors":
           this._ShowResult("lose");
@@ -52,14 +53,14 @@ class Game {
           this._player1._PointIncrease();
           break;
         case "scissors":
-          this._ShowResult("tie");
+          this._ShowResult("draw");
           break;
       }
     }
   }
 
   _Reset() {
-    console.log("Reset");
+    // console.log("Reset");
     this._player1._points = 0;
     this._player2._points = 0;
     this._player1._sign = "rock";
@@ -67,18 +68,28 @@ class Game {
   }
 
   _TryAgain() {
-    console.log("Try again");
+    // console.log("Try again");
+
+    this._options.forEach((option) => {
+      if (!option.classList.contains("hidden")) {
+        option.classList.toggle("hidden");
+      }
+    });
   }
 
   _ShowResult(result) {
-    console.log("Show Result");
-    console.log(result);
+    // console.log("Show Result");
+
+    // console.log(result);
     switch (result) {
       case "win":
+        this._options[0].classList.remove("hidden");
         break;
       case "lose":
+        this._options[1].classList.remove("hidden");
         break;
-      case "tie":
+      case "draw":
+        this._options[2].classList.remove("hidden");
         break;
     }
   }
